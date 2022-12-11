@@ -1,4 +1,10 @@
 
+/bin
+
+/build
+
+.gitignore
+
 bashgit
 
 shell

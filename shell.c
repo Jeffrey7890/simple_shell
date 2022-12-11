@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "shell.h"
-#include "error.h"
+
 
 
 /**
@@ -11,7 +11,7 @@
   */
 int main(int ac, char **argc)
 {
-	char *line = NULL, *argv[2];
+	char *line = NULL, **argv = NULL;
 
 	size_t len = 0;
 
@@ -19,21 +19,31 @@ int main(int ac, char **argc)
 		return (1);
 
 
-	argv[1] = NULL;
-
 	while (printf("#cisfun$ "))
 	{
 		if (getline(&line, &len, stdin) == -1)
 		{
 			putchar('\n');
+
+			fflush(stdout);
+			/* free_argv(argv); */
 			exit(0);
 		}
-		_cmdparse(line);
+		_cmdparse(line); /* adds '\0' to end of string */
 
+		fflush(stdout);
+
+		argv = tokenize(line, ' ');
+
+		/* printf("line [%p]: %s\n",(void*)line,line);*/
+		/* create fork and executes command */
 		_forkexecute(argv, line, argc[0]);
-		printf("%s", line);
+		
+		line = NULL;
+		free_argv(argv);
 	}
 
 
+	/* free_argv(argv); */
 	return (0);
 }
