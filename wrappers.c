@@ -1,0 +1,45 @@
+#include "shell.h"
+#include "paths.h"
+
+void _onexit(char **argv, char *line, path_t *head)
+{
+	if (strcmp(argv[0], "exit") == 0)
+	{
+		free_list(head);
+		free_argv(argv);
+		free(line);
+		line = NULL;
+		exit(0);
+	}
+}
+
+void free_argv_line(char **argv, char **line)
+{
+	free_argv(argv);
+
+	free(*line);
+	/* line = NULL; */
+}
+
+void _nullgetline(char **line, size_t *len, path_t *head)
+{
+	/* printf("terminations dsixc\n"); */
+	if (line == NULL)
+	{
+		printf("NULL command\n");
+		exit(1);
+	}
+
+	
+	if (getline(line, len, stdin) == -1)
+	{
+		putchar('\n');
+		free_list(head);
+		free(*line);
+		line = NULL;
+		exit(0);
+	}
+
+	(*line)[strlen(*line) - 1] = '\0';
+	/* printf("line [%s]\n",*line); */
+}

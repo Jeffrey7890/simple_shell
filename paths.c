@@ -7,6 +7,9 @@
 #include <unistd.h>
 
 
+/* #define VALGRIND_DEBUG */
+
+extern char **environ;
 
 char *spath(const path_t *head, char *cmd)
 {
@@ -30,8 +33,8 @@ char *spath(const path_t *head, char *cmd)
 
 	while (trv != NULL && cmd != NULL)
 	{
-		ptr = malloc(strlen(trv->path));
-		strcpy(ptr, trv->path);
+		/* todo: malloc funct */
+		ptr = strdup(trv->path);
 		strcat(ptr, "/");
 		strcat(ptr, cmd);
 		
@@ -48,23 +51,33 @@ char *spath(const path_t *head, char *cmd)
 
 	return (NULL);
 }
-int pup_paths(path_t **head, char *path)
+int pup_paths(path_t **head /*, char *path */)
 {
-	char *token = NULL;
+	char *token = NULL, *ptr;
+	
+	#ifndef VALGRIND_DEBUG
+	ptr = strdup(get_path(environ));
+	#endif
 
-
-
-	if (path == NULL || strlen(path) < 1)
+	#ifdef VALGRIND_DEBUG 
+	char *evg[] = {"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", (char *)0};
+	ptr = strdup(get_path(evg));
+	#endif
+	
+	if (/*path*/ptr == NULL || strlen(ptr) < 1)
 	{
 		perror("Invalid path");
 		return (-1);
 	}
 
-	token = strtok(path, "=");
+
+	token = strtok(/*path*/ ptr, "=");
 
 	/* creat an error func to check for env value */
 	if (strcmp(token, "PATH") != 0)
 	{
+		free(ptr);
+		ptr = NULL;
 		perror("Invalid input, key!=PATH");
 		return (-1);
 	}
@@ -74,7 +87,12 @@ int pup_paths(path_t **head, char *path)
 		insert(head, token);
 		token = strtok(NULL, ":");
 	}
-
+	/* strcpy(path, ptr);*/
+	/*printf("path : [%s]\n", path);*/
+	
+	free(ptr);
+	/*printf("ptr : [%s]\n", ptr);*/
+	ptr = NULL;
 	return (1);
 
 }
@@ -94,7 +112,6 @@ char *get_path(char **env)
 		
 	while(env[i] != NULL)
 	{
-
 		if (strstr(env[i], "PATH"))
 		{
 			/*printf("%s\n", env[i]);*/

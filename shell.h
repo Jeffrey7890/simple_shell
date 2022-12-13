@@ -11,13 +11,20 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "paths.h"
 #include "error.h"
 
 void free_argv(char **);
 
 int _cmdparse(char *cmd);
 
-void _forkexecute(char **argv, char *file);
+void free_argv_line(char **argv, char **line);
+
+void _nullgetline(char **line, size_t *len, path_t *head);
+
+void _onexit(char **argv, char *line, path_t *head);
+
+void _forkexecute(char **argv, char **envp);
 
 char **tokenize(char *cmdline, char delim);
 

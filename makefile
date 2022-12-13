@@ -1,8 +1,11 @@
-shell: shell.o tokenize.o error.o fork.o paths.o
-	gcc -g -Wall -Werror -Wextra -pedantic -std=gnu89 build/shell.o build/paths.o build/tokenize.o build/error.o build/fork.o -o bin/shell
+shell: shell.o tokenize.o error.o fork.o paths.o wrappers.o
+	gcc -g -Wall -Werror -Wextra -pedantic -std=gnu89 build/shell.o build/paths.o build/tokenize.o build/error.o build/fork.o build/wrappers.o -o bin/shell
 
 shell.o: shell.c shell.h
 	gcc -g -c -Wall -Werror -Wextra -pedantic -std=gnu89 shell.c -o build/shell.o
+
+wrappers.o: wrappers.c shell.h
+	gcc -g -c -Wall -Werror -Wextra -pedantic -std=gnu89 wrappers.c -o build/wrappers.o
 
 
 tokenize.o: tokenizer.c shell.h

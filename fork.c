@@ -1,10 +1,12 @@
 #include "shell.h"
 #include "error.h"
 
-
-void _forkexecute(char **argv, char *file)
+extern char **environ;
+void _forkexecute(char **argv, char **envp)
 {
 	pid_t child;
+
+ /*	char *env_args[] = {"PATH=/bin", (char *)0}; */
 
 	int status;
 
@@ -15,10 +17,8 @@ void _forkexecute(char **argv, char *file)
 	}
 	else if (child == 0)
 	{
-		execve(argv[0], argv, NULL);
 
-
-		printshe(file);
+		execve(argv[0], argv, envp);
 		exit(EXIT_FAILURE);
 	}
 
