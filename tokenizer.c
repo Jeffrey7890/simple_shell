@@ -1,4 +1,5 @@
 #include "shell.h"
+/* #include "paths.h" */
 
 int _cmdparse(char *cmd)
 {
@@ -12,9 +13,11 @@ char **tokenize(char *cmdline, char delim)
 
 	char *token, **argv;
 
+
+	/* printf("%s\n", cmdline); */
 	count = count_delim(cmdline, delim);
-	/* printf("count malloc [%d]\n", count); */
-	argv = malloc((count) * sizeof(argv));
+	/* printf("count malloc [%ld]\n", count * sizeof(argv)); */
+	argv = malloc((count + 1) * sizeof(argv));
 
 	if (argv == NULL)
 	{
@@ -26,14 +29,17 @@ char **tokenize(char *cmdline, char delim)
 
 	while (token != NULL)
 	{
+		/*printf("token [%s]\n", token);*/
 		argv[i] = strdup(token);
+		/*printf("argv[i] [%s]\n", argv[i]);*/
 		token = strtok(NULL, &delim);
 		i++;
 	}
-	/*printf("argv[0] %s\n", argv[0]); */
+	/*printf("argv[0] %s\n", argv[0]);*/
+
 	argv[i] = NULL;
 
-
+	/* free(cmdline); */
 	return (argv);
 }
 
@@ -49,10 +55,11 @@ void free_argv(char **argv)
 
 			/* printf("before free[%s] i[%d]\n", argv[i], i); */
 			free(argv[i]);
+			/* argv[i] = NULL; */
 			/*printf("after free[%s]\n", argv[i]);*/
 		}
 
-		/* free(argv); */
+		free(argv);
 	}
 }
 

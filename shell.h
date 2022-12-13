@@ -17,7 +17,7 @@ void free_argv(char **);
 
 int _cmdparse(char *cmd);
 
-void _forkexecute(char **argv, char *command, char *file);
+void _forkexecute(char **argv, char *file);
 
 char **tokenize(char *cmdline, char delim);
 

@@ -2,13 +2,11 @@
 #include "error.h"
 
 
-void _forkexecute(char **argv, char *command, char *file)
+void _forkexecute(char **argv, char *file)
 {
 	pid_t child;
 
 	int status;
-
-	argv[0] = command;
 
 	if ((child = fork()) < 0)
 	{
