@@ -29,7 +29,7 @@ int main(int ac, char **argc, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	pup_paths(&head);
-	while (printf("#cisfun$ "))
+	while (printf("# "))
 	{
 		_nullgetline(&line, &len, head);
 		argv = tokenize(line, ' ');
