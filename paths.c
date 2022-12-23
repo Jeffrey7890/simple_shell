@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-/* #define VALGRIND_DEBUG */
+#define VALGRIND_DEBUG
 
 
 /**
@@ -71,7 +71,7 @@ int pup_paths(path_t **head /*, char **environ */)
 	#endif
 
 	#ifdef VALGRIND_DEBUG
-	char *evg[] = {"PATH=/usr/local/sbin:/usr/local/bin:/bin",
+	char *evg[] = {"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 		(char *)0};
 
 	ptr = strdup(get_path(evg));

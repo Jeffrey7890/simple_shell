@@ -29,9 +29,11 @@ int main(int ac, char **argc, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	pup_paths(&head /*, envp */);
-	while (printf("# "))
+	while (1)
 	{
+		/* fflush(stdout); */
 		_nullgetline(&line, &len, head);
+
 		argv = tokenize(line, ' ');
 		_onexit(argv, line, head);
 		chek = spath(head, argv[0]);
@@ -46,5 +48,7 @@ int main(int ac, char **argc, char **envp)
 		free(line);
 		line = NULL;
 	}
+	printf("outsit loop");
+	fflush(stdout);
 	return (0);
 }

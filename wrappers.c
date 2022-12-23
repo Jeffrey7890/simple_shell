@@ -49,12 +49,14 @@ void _nullgetline(char **line, size_t *len, path_t *head)
 
 	if (getline(line, len, stdin) == -1)
 	{
+		/*fflush(stdout);*/
 		putchar('\n');
 		free_list(head);
 		free(*line);
 		line = NULL;
 		exit(0);
 	}
+	/* fflush(stdout); */
 
 	(*line)[strlen(*line) - 1] = '\0';
 	/* printf("line [%s]\n",*line); */
