@@ -1,7 +1,12 @@
 #include "shell.h"
 #include "error.h"
 
-extern char **environ;
+
+/**
+  * _forkexecute - executes the command
+  * @argv: array of char pointers of command
+  * @envp: environment array of ponters
+  */
 void _forkexecute(char **argv, char **envp)
 {
 	pid_t child;
@@ -10,7 +15,8 @@ void _forkexecute(char **argv, char **envp)
 
 	int status;
 
-	if ((child = fork()) < 0)
+	child = fork();
+	if (child < 0)
 	{
 		printshe("Error");
 		exit(EXIT_FAILURE);
@@ -24,5 +30,5 @@ void _forkexecute(char **argv, char **envp)
 
 	if (wait(&status) != child)
 		printshe("Error");
-}	
+}
 

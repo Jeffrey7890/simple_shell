@@ -1,18 +1,28 @@
 #include "shell.h"
 /* #include "paths.h" */
 
+/**
+  * _cmdparse - parse command by add \0
+  * @cmd: command
+  * Return: int
+  */
 int _cmdparse(char *cmd)
 {
 	cmd[strlen(cmd) - 1] = '\0';
 	return (0);
 }
 
+/**
+  * tokenize - it separets th cmdlin with delim
+  * @cmdline: command line arg
+  * @delim: delimiter to seperate with
+  * Return: char
+  */
 char **tokenize(char *cmdline, char delim)
 {
 	int count, i = 0;
 
 	char *token, **argv;
-
 
 	/* printf("%s\n", cmdline); */
 	count = count_delim(cmdline, delim);
@@ -43,6 +53,10 @@ char **tokenize(char *cmdline, char delim)
 	return (argv);
 }
 
+/**
+  * free_argv - frees the **argv
+  * @argv: array of char pointers
+  */
 void free_argv(char **argv)
 {
 	int i;
@@ -63,6 +77,12 @@ void free_argv(char **argv)
 	}
 }
 
+/**
+  * count_delim - it counts all the dlimiter in cmd
+  * @str: string wth separted delim
+  * @del: char
+  * Return: int
+  */
 int count_delim(const char *str, const char del)
 {
 	const char *ptr = str;

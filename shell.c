@@ -28,7 +28,7 @@ int main(int ac, char **argc, char **envp)
 		perror("Ivalid ");
 		exit(EXIT_FAILURE);
 	}
-	pup_paths(&head);
+	pup_paths(&head /*, envp */);
 	while (printf("# "))
 	{
 		_nullgetline(&line, &len, head);

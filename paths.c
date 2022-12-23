@@ -9,8 +9,13 @@
 
 /* #define VALGRIND_DEBUG */
 
-extern char **environ;
 
+/**
+  * spath - search for paths in cmd
+  * @head: structure for paths
+  * @cmd: command line arg
+  * Return: char
+  */
 char *spath(const path_t *head, char *cmd)
 {
 	char *ptr;
@@ -37,7 +42,7 @@ char *spath(const path_t *head, char *cmd)
 		ptr = strdup(trv->path);
 		strcat(ptr, "/");
 		strcat(ptr, cmd);
-		
+
 		if (stat(ptr, &st) == 0)
 		{
 			return (ptr);
@@ -51,29 +56,32 @@ char *spath(const path_t *head, char *cmd)
 
 	return (NULL);
 }
-int pup_paths(path_t **head /*, char *path */)
+
+/**
+  * pup_paths - pup paths in linked list
+  * @head: structure for paths
+  * Return: int
+  */
+int pup_paths(path_t **head /*, char **environ */)
 {
 	char *token = NULL, *ptr;
-	
+
 	#ifndef VALGRIND_DEBUG
 	ptr = strdup(get_path(environ));
 	#endif
 
-	#ifdef VALGRIND_DEBUG 
-	char *evg[] = {"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", (char *)0};
+	#ifdef VALGRIND_DEBUG
+	char *evg[] = {"PATH=/usr/local/sbin:/usr/local/bin:/bin",
+		(char *)0};
+
 	ptr = strdup(get_path(evg));
 	#endif
-	
 	if (/*path*/ptr == NULL || strlen(ptr) < 1)
 	{
 		perror("Invalid path");
 		return (-1);
 	}
-
-
 	token = strtok(/*path*/ ptr, "=");
-
-	/* creat an error func to check for env value */
 	if (strcmp(token, "PATH") != 0)
 	{
 		free(ptr);
@@ -81,22 +89,22 @@ int pup_paths(path_t **head /*, char *path */)
 		perror("Invalid input, key!=PATH");
 		return (-1);
 	}
-
 	while (token != NULL && head != NULL)
 	{
 		insert(head, token);
 		token = strtok(NULL, ":");
 	}
-	/* strcpy(path, ptr);*/
-	/*printf("path : [%s]\n", path);*/
-	
 	free(ptr);
-	/*printf("ptr : [%s]\n", ptr);*/
 	ptr = NULL;
 	return (1);
 
 }
 
+/**
+  * get_path - get paths in env
+  * @env: list for paths
+  * Return: char arrray
+  */
 char *get_path(char **env)
 {
 
@@ -109,13 +117,13 @@ char *get_path(char **env)
 
 		return (NULL);
 	}
-		
-	while(env[i] != NULL)
+
+	while (env[i] != NULL)
 	{
 		if (strstr(env[i], "PATH"))
 		{
 			/*printf("%s\n", env[i]);*/
-			return(env[i]);
+			return (env[i]);
 		}
 		i++;
 	}
@@ -123,6 +131,10 @@ char *get_path(char **env)
 	return (NULL);
 }
 
+/**
+  * free_list - free memory of linked list
+  * @head: head of linked list
+  */
 void free_list(path_t *head)
 {
 	path_t *trv = head;
@@ -137,41 +149,30 @@ void free_list(path_t *head)
 }
 
 
-void print_paths_list(const path_t *head)
-{
-	const path_t *trv = head;
-
-	while (trv != NULL)
-	{
-		printf("%s\n", trv->path);
-		trv = trv->next;
-	}
-
-}
-
+/**
+  * insert - inseart paths into list
+  * @head: head of list
+  * @str: string of tpaht
+  * Return: head of list
+  */
 struct paths *insert(path_t **head, char *str)
 {
 	path_t *cur = *head, *new_node;
-	new_node =  malloc(sizeof(path_t));
 
+	new_node =  malloc(sizeof(path_t));
 	if (new_node == NULL || str == NULL)
 	{
 		free(new_node);
 		return (NULL);
 	}
-
 	new_node->path = strdup(str);
-
 	if (*head == NULL)
 	{
 		*head = new_node;
 		return (new_node);
 	}
-
 	while (cur->next != NULL)
 		cur = cur->next;
-
 	cur->next = new_node;
-
 	return (new_node);
 }

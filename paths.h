@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-
+extern char **environ;
 
 /* extern char **environ; */
 
@@ -23,7 +23,7 @@ char *pathsear(path_t *head, char *cmd);
 
 char *get_path(char **env);
 
-int pup_paths(path_t **head/*, char *path */);
+int pup_paths(path_t **head /*, char **environ */);
 
 void print_paths_list(const path_t *head);
 
