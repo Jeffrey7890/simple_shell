@@ -49,8 +49,14 @@ int main(int ac, char **argc, char **envp)
 		free_argv(argv);
 		free(line);
 		line = NULL;
+		printf("Environment:\n");
+		while(*envp != NULL)
+		{
+			printf("%s\n", *envp);
+			envp++;
+		}
+
 	}
-	printf("outsit loop");
-	fflush(stdout);
+
 	return (0);
 }
