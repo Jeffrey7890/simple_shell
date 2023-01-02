@@ -23,12 +23,13 @@ int main(int ac, char **argc, char **envp)
 
 	path_t *head = NULL;
 
-	if (ac < 0)
+	if (ac < 1)
 	{
 		perror("Ivalid ");
 		exit(EXIT_FAILURE);
 	}
 	pup_paths(&head /*, envp */);
+	/* printf("$ ");*/
 	while (1)
 	{
 		/* fflush(stdout); */
@@ -44,6 +45,7 @@ int main(int ac, char **argc, char **envp)
 		}
 		else
 			printf("%s: No such file or direcotry\n", argc[0]);
+		/*printf("$ ");*/
 		free_argv(argv);
 		free(line);
 		line = NULL;
