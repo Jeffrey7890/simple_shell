@@ -10,25 +10,21 @@
 
 
 /**
- * struct command - datatstructure to hold command and arguments
- * @cmdline: command line
- * @arg: argument to command
- * @next: next command if piped
+ * struct cmdVec - data struct for command line
+ * @argV: argument vect for execv
+ * @cnt: number of args
  */
-typedef struct command
+typedef struct cmdVec
 {
-	char *cmdline;
-	char *arg;
-	struct command *next;
-} command_t;
+	char **argV;
+	int cnt;
+} cmdVec_t;
 
-command_t *add_command(command_t **head, char *cmd, char *arg);
-void free_command_list(command_t *head);
-void print_command(command_t *head);
 
-void free_command(char *line);
-int getcommand(void);
-void prompt(void);
+cmdVec_t *construct_cmdVec(char *line);
+void free_cmdVec(cmdVec_t *command);
+void print_cmdVec(cmdVec_t *command);
+int prompt(void);
 int handle_read(ssize_t *n);
 
 
