@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <signal.h>
 
 /**
  * struct cmdVec - data struct for command line
@@ -22,10 +22,14 @@ typedef struct cmdVec
 
 
 cmdVec_t *construct_cmdVec(char *line);
+int input_data(char *file, char **environ);
+void sigHandler(int sig);
 void free_cmdVec(cmdVec_t *command);
 void print_cmdVec(cmdVec_t *command);
 int prompt(void);
 int handle_read(ssize_t *n);
 
+int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ);
+int handle_exec(int n, char *file);
 
 #endif

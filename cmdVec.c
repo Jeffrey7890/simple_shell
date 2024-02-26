@@ -16,6 +16,42 @@ int prompt(void)
 	return (1);
 }
 
+/**
+ * input_data - collects input from user
+ * @file: name of executed file
+ * @env: environment pointer
+ * Return: 1 on success of -1 on fail
+ */
+int input_data(char *file, char **env)
+{
+	cmdVec_t *command;
+	char *line = NULL;
+	size_t n = 0;
+	ssize_t nread;
+	int exec_stat;
+
+	if (signal(SIGINT, sigHandler) == SIG_ERR)
+		exit(-1);
+	nread = getline(&line, &n, stdin);
+	if (nread != EOF && *line != '\n')
+	{
+		command = construct_cmdVec(line);
+		exec_stat = execute_cmd(command, line, file, env);
+		/* print_cmdVec(command); */
+		free_cmdVec(command);
+	}
+	free(line);
+	line = NULL;
+	n = 0;
+
+	if (handle_read(&nread) == -1)
+		exit(exec_stat);
+
+	/*return (handle_read(&nread));*/
+	return (1);
+}
+
+
 
 /**
  * construct_cmdVec - constructs the char pointer array for exev
@@ -39,7 +75,10 @@ cmdVec_t *construct_cmdVec(char *line)
 	if (command->argV == NULL)
 		return (NULL);
 
-	token = strtok(line, " ");
+	token = strtok(line, "\n");
+
+	/* uncomment for taking multiple arguments */
+	/* token = strtok(token, " "); */
 	while (token != NULL)
 	{
 		command->argV[i] = strdup(token);
@@ -89,4 +128,3 @@ void print_cmdVec(cmdVec_t *command)
 		for (i = 0; i < command->cnt; i++)
 			printf("argV[%d] %s | ", i, command->argV[i]);
 }
-
