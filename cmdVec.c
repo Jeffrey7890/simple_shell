@@ -10,9 +10,9 @@
  */
 int prompt(void)
 {
-	const char *PROMPT = "($) ";
+	const char *PROMPT = "#cisfun$ ";
 
-	write(STDOUT_FILENO, PROMPT, 4);
+	write(STDOUT_FILENO, PROMPT, 9);
 	return (1);
 }
 
