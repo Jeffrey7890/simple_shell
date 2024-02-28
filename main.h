@@ -22,14 +22,16 @@ typedef struct cmdVec
 
 
 cmdVec_t *construct_cmdVec(char *line);
-int input_data(char *file, char **environ);
+int input_data(char *file, char **environ, int *exec);
 void sigHandler(int sig);
 void free_cmdVec(cmdVec_t *command);
 void print_cmdVec(cmdVec_t *command);
 int prompt(void);
-int handle_read(ssize_t *n);
+int handle_read(ssize_t *nread);
+int _strcmp(char *s1, char *s2);
+void free_line(char **line);
 
 int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ);
-int handle_exec(int n, char *file);
+int handle_exec(char *file);
 
 #endif

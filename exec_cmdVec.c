@@ -18,17 +18,16 @@ int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
 	pid_t n = 0;
 	int status = 0, nExec = 0;
 
-
 	n = fork();
 	if (n == 0)
 	{
 		nExec = execve((const char *) command->argV[0], command->argV, environ);
 		if (nExec == -1)
 		{
+			handle_exec(file);
 			free(line);
 			line = NULL;
 			free_cmdVec(command);
-			fprintf(stderr, "%s: No such file or directory\n", file);
 			exit(127);
 		}
 	}

@@ -8,9 +8,11 @@
  */
 int handle_read(ssize_t *n)
 {
-	switch (*n)
+	if (*n > -1)
+		return (1);
+	switch (errno)
 	{
-		case EOF:
+		case ENOMEM:
 			printf("\n");
 			return (-1);
 		default:
@@ -34,16 +36,19 @@ void sigHandler(int sig)
 
 /**
  * handle_exec - handle error from execve
- * @n: return value
  * @file: name of this executable
  * Return: 0 on success and -1 on fail
  */
-int handle_exec(int n, char *file)
+int handle_exec(char *file)
 {
-	switch (n)
+	switch (errno)
 	{
-		case EACCES:
+		case ENOENT:
 			fprintf(stderr, "%s: No such file or directory\n", file);
+			return (-1);
+
+		case EACCES:
+			fprintf(stderr, "%s: file cannot be accessed\n", file);
 			return (-1);
 		default:
 			return (1);
