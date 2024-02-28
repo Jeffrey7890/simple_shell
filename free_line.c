@@ -6,7 +6,10 @@
  */
 void free_line(char **line)
 {
-	free(*line);
-	*line = NULL;
+	if (*line != NULL)
+	{
+		free(*line);
+		*line = NULL;
+	}
 }
 
