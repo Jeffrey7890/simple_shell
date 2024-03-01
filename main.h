@@ -23,7 +23,7 @@ typedef struct cmdVec
 
 
 cmdVec_t *construct_cmdVec(char *line);
-int input_data(char *file, char **environ, int *exec);
+int input_data(char *file, char **environ, int *exec, int flag);
 void sigHandler(int sig);
 void free_cmdVec(cmdVec_t *command);
 void print_cmdVec(cmdVec_t *command);

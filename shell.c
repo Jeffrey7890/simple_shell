@@ -32,11 +32,11 @@ int main(int argc, char *argv[], char **envP)
 	{
 		do {
 			prompt();
-		} while (input_data(argv[argc - 1], envP, &exec) == 1);
+		} while (input_data(argv[argc - 1], envP, &exec, 0) == 1);
 	}
 	else
 	{
-		input_data(argv[argc - 1], envP, &exec);
+		while(input_data(argv[argc - 1], envP, &exec, 1) == 1);
 	}
 	return (0);
 }

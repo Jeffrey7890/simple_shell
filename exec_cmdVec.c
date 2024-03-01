@@ -26,6 +26,7 @@ int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
 		return (-1);
 	}
 	
+	
 	n = fork();
 	if (n == 0)
 	{
