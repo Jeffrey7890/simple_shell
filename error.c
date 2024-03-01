@@ -39,12 +39,12 @@ void sigHandler(int sig)
  * @file: name of this executable
  * Return: 0 on success and -1 on fail
  */
-int handle_exec(char *file)
+int handle_exec(char *file, char *cmd, int nCmd)
 {
 	switch (errno)
 	{
-		case ENOENT:
-			fprintf(stderr, "%s: No such file or directory\n", file);
+		case ENOENT: 
+			fprintf(stderr, "%s: %d: %s: not found\n", file, ++nCmd, cmd);
 			return (-1);
 
 		case EACCES:

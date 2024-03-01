@@ -27,16 +27,17 @@ int main(int argc, char *argv[], char **envP)
 {
 
 	int exec = 0;
+	static int nCmd = 0;
 
 	if (isatty(STDIN_FILENO))
 	{
 		do {
 			prompt();
-		} while (input_data(argv[argc - 1], envP, &exec, 0) == 1);
+		} while (input_data(argv[argc - 1], envP, &exec, 0, nCmd++) == 1);
 	}
 	else
 	{
-		while(input_data(argv[argc - 1], envP, &exec, 1) == 1);
+		while(input_data(argv[argc - 1], envP, &exec, 1, nCmd++) == 1);
 	}
 	return (0);
 }

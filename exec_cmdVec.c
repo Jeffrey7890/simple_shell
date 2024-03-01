@@ -12,7 +12,7 @@
  * @environ: environment list
  * Return: 0 on success and -1 on fail
  */
-int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
+int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ, int nCmd)
 {
 
 	pid_t n = 0;
@@ -20,12 +20,13 @@ int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
 
 	
 	
+	/*
 	if (search_command_in_path(command, environ) == -1)
 	{
 		fprintf(stderr, "%s: No such file or directory\n", file);
 		return (127);
 	}
-	
+	*/
 	
 	n = fork();
 	if (n == 0)
@@ -33,7 +34,7 @@ int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
 		nExec = execve((const char *) command->argV[0], command->argV, environ);
 		if (nExec == -1)
 		{
-			handle_exec(file);
+			handle_exec(file, command->argV[0], nCmd);
 			free(line);
 			line = NULL;
 			free_cmdVec(command);

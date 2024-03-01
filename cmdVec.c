@@ -23,7 +23,7 @@ int prompt(void)
  * @exec_stat: status of last execution
  * Return: 1 on success of -1 on fail
  */
-int input_data(char *file, char **env, int *exec_stat, int flag)
+int input_data(char *file, char **env, int *exec_stat, int flag, int nCmd)
 {
 	cmdVec_t *command;
 	char *line = NULL;
@@ -37,7 +37,7 @@ int input_data(char *file, char **env, int *exec_stat, int flag)
 	if (nread != -1 && *line != '\n')
 	{
 		command = construct_cmdVec(line);
-		*exec_stat = execute_cmd(command, line, file, env);
+		*exec_stat = execute_cmd(command, line, file, env, nCmd);
 		/* print_cmdVec(command); */
 		free_cmdVec(command);
 	}
