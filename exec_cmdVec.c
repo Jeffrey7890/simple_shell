@@ -19,13 +19,13 @@ int execute_cmd(cmdVec_t *command, char *line, char *file, char **environ)
 	int status = 0, nExec = 0;
 
 	
-	/*
+	
 	if (search_command_in_path(command, environ) == -1)
 	{
 		fprintf(stderr, "%s: No such file or directory\n", file);
-		return (-1);
+		return (127);
 	}
-	*/
+	
 	
 	n = fork();
 	if (n == 0)
