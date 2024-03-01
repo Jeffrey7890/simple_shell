@@ -28,7 +28,6 @@ int main(int argc, char *argv[], char **envP)
 
 	int exec = 0;
 
-	print_env(envP);
 	if (isatty(STDIN_FILENO))
 	{
 		do {
