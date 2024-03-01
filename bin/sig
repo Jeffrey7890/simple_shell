@@ -1,0 +1,4 @@
+SIGINT
+When the user types the terminal interrupt character (usually Control-C), the
+terminal driver sends this signal to the foreground process group. The
+default action for this signal is to terminate the process.

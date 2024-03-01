@@ -3,20 +3,6 @@
 
 
 /**
- * print_env - prints the environ vect
- * @envp: environ pointer
- */
-void print_env(char **envp)
-{
-	char **trav = envp;
-
-	printf("%s\n", *trav);
-
-	while (*(++trav) != NULL)
-		printf("%s\n", *trav);
-}
-
-/**
  * main - beautiful code that passes betty checks
  * @argc: argument count
  * @argv: argument vector
@@ -28,7 +14,6 @@ int main(int argc, char *argv[], char **envP)
 
 	int exec = 0;
 
-	print_env(envP);
 	if (isatty(STDIN_FILENO))
 	{
 		do {
