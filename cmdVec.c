@@ -34,6 +34,18 @@ int input_data(char *file, char **env, int *exec_stat, int flag, int nCmd)
 		exit(-1);
 	nread = getline(&line, &n, stdin);
 
+	if (strstr(line, "exit"))
+	{
+		free_line(&line);
+		exit(*exec_stat);
+	}
+	if (strstr(line, "env"))
+	{
+		print_env(env);
+		free_line(&line);
+		*exec_stat = 0;
+		return (1);
+	}
 	if (nread != -1 && *line != '\n')
 	{
 		command = construct_cmdVec(line);
